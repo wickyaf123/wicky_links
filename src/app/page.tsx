@@ -30,6 +30,12 @@ export default function Home() {
       description: "AI-Powered Fantasy Team Builder for cricket matches",
       color: "bg-yellow-600",
     },
+    {
+      name: "BBL AI Insights",
+      url: "https://bbl-ai-insights-i-hawk-git-main-mayurs-projects-b6048be7.vercel.app/",
+      description: "Cricket Analytics Platform for performance statistics",
+      color: "bg-orange-600",
+    },
   ];
 
   return (
