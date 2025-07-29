@@ -36,6 +36,12 @@ export default function Home() {
       description: "Cricket Analytics Platform for performance statistics",
       color: "bg-orange-600",
     },
+    {
+      name: "IPL Platform",
+      url: "https://ipl-040725-frontend.vercel.app/",
+      description: "IPL cricket platform with enhanced features and insights",
+      color: "bg-indigo-600",
+    },
   ];
 
   return (
