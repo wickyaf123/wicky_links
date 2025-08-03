@@ -42,6 +42,12 @@ export default function Home() {
       description: "IPL cricket platform with enhanced features and insights",
       color: "bg-indigo-600",
     },
+    {
+      name: "BBL AI Batting",
+      url: "https://bbl-ai-batting-frontend.vercel.app/",
+      description: "BBL batting analytics with AI-powered insights and statistics",
+      color: "bg-pink-600",
+    },
   ];
 
   return (
