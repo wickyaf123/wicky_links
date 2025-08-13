@@ -31,12 +31,6 @@ export default function Home() {
       color: "bg-yellow-600",
     },
     {
-      name: "BBL AI Insights",
-      url: "https://bbl-ai-insights-i-hawk-git-main-mayurs-projects-b6048be7.vercel.app/",
-      description: "Cricket Analytics Platform for performance statistics",
-      color: "bg-orange-600",
-    },
-    {
       name: "IPL Platform",
       url: "https://ipl-040725-frontend.vercel.app/",
       description: "IPL cricket platform with enhanced features and insights",
