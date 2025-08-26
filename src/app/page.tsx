@@ -42,6 +42,12 @@ export default function Home() {
       description: "BBL batting analytics with AI-powered insights and statistics",
       color: "bg-pink-600",
     },
+    {
+      name: "Cricket Insights Pro",
+      url: "https://insights-frontend-1.vercel.app/",
+      description: "AI-Powered Match Analytics & Strategy with 6 AI Agents for cricket",
+      color: "bg-teal-600",
+    },
   ];
 
   return (
