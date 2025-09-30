@@ -37,6 +37,12 @@ export default function Home() {
       color: "bg-indigo-600",
     },
     {
+      name: "IPL Opposition Planning",
+      url: "https://ipl-opposition-planning-frontend.vercel.app/",
+      description: "IPL opposition planning and strategic analysis tool",
+      color: "bg-orange-600",
+    },
+    {
       name: "BBL AI Batting",
       url: "https://bbl-ai-batting-frontend.vercel.app/",
       description: "BBL batting analytics with AI-powered insights and statistics",
