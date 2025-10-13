@@ -54,6 +54,12 @@ export default function Home() {
       description: "AI-Powered Match Analytics & Strategy with 6 AI Agents for cricket",
       color: "bg-teal-600",
     },
+    {
+      name: "Cricket Chatbots",
+      url: "https://chatbots-cric-hor-frontend.vercel.app/",
+      description: "Interactive cricket chatbots for enhanced user engagement and insights",
+      color: "bg-cyan-600",
+    },
   ];
 
   return (
