@@ -60,6 +60,12 @@ export default function Home() {
       description: "Interactive cricket chatbots for enhanced user engagement and insights",
       color: "bg-cyan-600",
     },
+    {
+      name: "Chat Final",
+      url: "https://chatfinalfrontend.vercel.app/",
+      description: "Advanced chat interface with enhanced features and functionality",
+      color: "bg-slate-600",
+    },
   ];
 
   return (
