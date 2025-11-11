@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 export default function Home() {
-  const [openCategories, setOpenCategories] = useState<string[]>(['main']);
+  const [openCategories, setOpenCategories] = useState<string[]>(['chatbots']);
 
   const toggleCategory = (categoryId: string) => {
     setOpenCategories(prev => 
@@ -15,26 +15,55 @@ export default function Home() {
 
   const categories = [
     {
-      id: 'main',
-      title: 'Main Platform',
-      icon: '🏠',
-      color: 'bg-purple-100 dark:bg-purple-900/30',
-      borderColor: 'border-purple-300 dark:border-purple-700',
+      id: 'chatbots',
+      title: 'Chatbots',
+      icon: '🤖',
+      color: 'bg-blue-100 dark:bg-blue-900/30',
+      borderColor: 'border-blue-300 dark:border-blue-700',
       links: [
         {
-          name: "Wicky Main",
-          url: "https://wicky-alpha.vercel.app/",
-          description: "The main Wicky platform for sports betting and more",
-          color: "bg-purple-600",
+          name: "Cricket Chatbots",
+          url: "https://chatbots-cric-hor-frontend.vercel.app/",
+          description: "Interactive cricket chatbots for enhanced user engagement and insights",
+          color: "bg-cyan-600",
+        },
+        {
+          name: "Chat Final",
+          url: "https://chatfinalfrontend.vercel.app/",
+          description: "Advanced chat interface with enhanced features and functionality",
+          color: "bg-slate-600",
         },
       ]
     },
     {
-      id: 'multi-sport',
-      title: 'Multi-Sport Betting',
-      icon: '🏆',
-      color: 'bg-blue-100 dark:bg-blue-900/30',
-      borderColor: 'border-blue-300 dark:border-blue-700',
+      id: 'live',
+      title: 'Live',
+      icon: '📺',
+      color: 'bg-red-100 dark:bg-red-900/30',
+      borderColor: 'border-red-300 dark:border-red-700',
+      links: []
+    },
+    {
+      id: 'ai-insights',
+      title: 'AI Insights',
+      icon: '🧠',
+      color: 'bg-purple-100 dark:bg-purple-900/30',
+      borderColor: 'border-purple-300 dark:border-purple-700',
+      links: [
+        {
+          name: "Cricket Insights Pro",
+          url: "https://insights-frontend-1.vercel.app/",
+          description: "AI-Powered Match Analytics & Strategy with 6 AI Agents for cricket",
+          color: "bg-teal-600",
+        },
+      ]
+    },
+    {
+      id: 'multi-builder',
+      title: 'Multi Builder',
+      icon: '🔧',
+      color: 'bg-green-100 dark:bg-green-900/30',
+      borderColor: 'border-green-300 dark:border-green-700',
       links: [
         {
           name: "Multi Builder",
@@ -45,42 +74,54 @@ export default function Home() {
       ]
     },
     {
-      id: 'basketball',
-      title: 'Basketball',
-      icon: '🏀',
-      color: 'bg-red-100 dark:bg-red-900/30',
-      borderColor: 'border-red-300 dark:border-red-700',
+      id: 'byob',
+      title: 'BYOB (Build Your Own Bet)',
+      icon: '🎯',
+      color: 'bg-orange-100 dark:bg-orange-900/30',
+      borderColor: 'border-orange-300 dark:border-orange-700',
+      links: []
+    },
+    {
+      id: 'content-generator',
+      title: 'Content Generator',
+      icon: '✍️',
+      color: 'bg-teal-100 dark:bg-teal-900/30',
+      borderColor: 'border-teal-300 dark:border-teal-700',
+      links: []
+    },
+    {
+      id: 'teams',
+      title: 'Teams',
+      icon: '👥',
+      color: 'bg-indigo-100 dark:bg-indigo-900/30',
+      borderColor: 'border-indigo-300 dark:border-indigo-700',
+      links: []
+    },
+    {
+      id: 'miscellaneous',
+      title: 'Miscellaneous',
+      icon: '📦',
+      color: 'bg-gray-100 dark:bg-gray-800/30',
+      borderColor: 'border-gray-300 dark:border-gray-600',
       links: [
+        {
+          name: "Wicky Main",
+          url: "https://wicky-alpha.vercel.app/",
+          description: "The main Wicky platform for sports betting and more",
+          color: "bg-purple-600",
+        },
         {
           name: "NBA",
           url: "https://nba-frontend-woad.vercel.app/",
           description: "NBA betting platform and statistics",
           color: "bg-red-600",
         },
-      ]
-    },
-    {
-      id: 'football',
-      title: 'Football',
-      icon: '⚽',
-      color: 'bg-green-100 dark:bg-green-900/30',
-      borderColor: 'border-green-300 dark:border-green-700',
-      links: [
         {
           name: "Premier League",
           url: "https://epl-frontend-oqbw.vercel.app/",
           description: "Premier League betting assistant with real-time insights",
           color: "bg-green-600",
         },
-      ]
-    },
-    {
-      id: 'cricket',
-      title: 'Cricket Platforms',
-      icon: '🏏',
-      color: 'bg-yellow-100 dark:bg-yellow-900/30',
-      borderColor: 'border-yellow-300 dark:border-yellow-700',
-      links: [
         {
           name: "Fantasy Team Builder",
           url: "https://ipl-fantsay1004-git-main-mayurs-projects-b6048be7.vercel.app/",
@@ -105,33 +146,6 @@ export default function Home() {
           description: "BBL batting analytics with AI-powered insights and statistics",
           color: "bg-pink-600",
         },
-        {
-          name: "Cricket Insights Pro",
-          url: "https://insights-frontend-1.vercel.app/",
-          description: "AI-Powered Match Analytics & Strategy with 6 AI Agents for cricket",
-          color: "bg-teal-600",
-        },
-      ]
-    },
-    {
-      id: 'chat-ai',
-      title: 'Chat & AI Tools',
-      icon: '🤖',
-      color: 'bg-gray-100 dark:bg-gray-800/30',
-      borderColor: 'border-gray-300 dark:border-gray-600',
-      links: [
-        {
-          name: "Cricket Chatbots",
-          url: "https://chatbots-cric-hor-frontend.vercel.app/",
-          description: "Interactive cricket chatbots for enhanced user engagement and insights",
-          color: "bg-cyan-600",
-        },
-        {
-          name: "Chat Final",
-          url: "https://chatfinalfrontend.vercel.app/",
-          description: "Advanced chat interface with enhanced features and functionality",
-          color: "bg-slate-600",
-        },
       ]
     },
   ];
@@ -144,7 +158,7 @@ export default function Home() {
             Wicky Links
           </h1>
           <p className="text-lg text-gray-600 dark:text-gray-300">
-            Your gateway to various Wicky sports betting platforms
+            Your gateway to various Wicky products and platforms
           </p>
         </header>
 
@@ -175,32 +189,40 @@ export default function Home() {
               {/* Category Content */}
               {openCategories.includes(category.id) && (
                 <div className="border-t border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 p-6">
-                  <div className="grid gap-4 md:grid-cols-2">
-                    {category.links.map((link, index) => (
-                      <a
-                        key={index}
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="group block p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md"
-                      >
-                        <div className="flex items-center mb-3">
-                          <div className={`w-10 h-10 rounded-full ${link.color} flex items-center justify-center text-white font-bold text-sm`}>
-                            {link.name.charAt(0)}
+                  {category.links.length > 0 ? (
+                    <div className="grid gap-4 md:grid-cols-2">
+                      {category.links.map((link, index) => (
+                        <a
+                          key={index}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group block p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md"
+                        >
+                          <div className="flex items-center mb-3">
+                            <div className={`w-10 h-10 rounded-full ${link.color} flex items-center justify-center text-white font-bold text-sm`}>
+                              {link.name.charAt(0)}
+                            </div>
+                            <h3 className="ml-3 text-lg font-semibold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                              {link.name}
+                            </h3>
                           </div>
-                          <h3 className="ml-3 text-lg font-semibold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                            {link.name}
-                          </h3>
-                        </div>
-                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{link.description}</p>
-                        <div className="flex justify-end">
-                          <span className="text-blue-600 dark:text-blue-400 font-medium text-sm group-hover:underline">
-                            Visit Site →
-                          </span>
-                        </div>
-                      </a>
-                    ))}
-                  </div>
+                          <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{link.description}</p>
+                          <div className="flex justify-end">
+                            <span className="text-blue-600 dark:text-blue-400 font-medium text-sm group-hover:underline">
+                              Visit Site →
+                            </span>
+                          </div>
+                        </a>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-center py-8">
+                      <p className="text-gray-500 dark:text-gray-400 text-sm">
+                        No platforms available in this category yet.
+                      </p>
+                    </div>
+                  )}
                 </div>
               )}
             </div>
