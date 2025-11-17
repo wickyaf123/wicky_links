@@ -56,6 +56,12 @@ export default function Home() {
           description: "AI-Powered Match Analytics & Strategy with 6 AI Agents for cricket",
           color: "bg-teal-600",
         },
+        {
+          name: "Sports Preview Viz",
+          url: "https://sports-preview-viz.lovable.app/",
+          description: "Advanced sports data visualization and preview analytics platform",
+          color: "bg-purple-600",
+        },
       ]
     },
     {
@@ -87,7 +93,14 @@ export default function Home() {
       icon: '✍️',
       color: 'bg-teal-100 dark:bg-teal-900/30',
       borderColor: 'border-teal-300 dark:border-teal-700',
-      links: []
+      links: [
+        {
+          name: "Triple Sport Analyzer",
+          url: "https://triple-sport-analyzer.lovable.app/",
+          description: "Comprehensive multi-sport analysis and content generation platform",
+          color: "bg-teal-600",
+        },
+      ]
     },
     {
       id: 'teams',
