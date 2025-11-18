@@ -41,7 +41,20 @@ export default function Home() {
       icon: '📺',
       color: 'bg-red-100 dark:bg-red-900/30',
       borderColor: 'border-red-300 dark:border-red-700',
-      links: []
+      links: [
+        {
+          name: "NBA",
+          url: "https://nba-frontend-woad.vercel.app/",
+          description: "NBA betting platform and statistics",
+          color: "bg-red-600",
+        },
+        {
+          name: "Premier League",
+          url: "https://epl-frontend-oqbw.vercel.app/",
+          description: "Premier League betting assistant with real-time insights",
+          color: "bg-green-600",
+        },
+      ]
     },
     {
       id: 'ai-insights',
@@ -51,16 +64,10 @@ export default function Home() {
       borderColor: 'border-purple-300 dark:border-purple-700',
       links: [
         {
-          name: "Cricket Insights Pro",
-          url: "https://insights-frontend-1.vercel.app/",
-          description: "AI-Powered Match Analytics & Strategy with 6 AI Agents for cricket",
+          name: "Triple Sport Analyzer",
+          url: "https://triple-sport-analyzer.lovable.app/",
+          description: "Comprehensive multi-sport analysis and content generation platform",
           color: "bg-teal-600",
-        },
-        {
-          name: "Sports Preview Viz",
-          url: "https://sports-preview-viz.lovable.app/",
-          description: "Advanced sports data visualization and preview analytics platform",
-          color: "bg-purple-600",
         },
       ]
     },
@@ -95,10 +102,16 @@ export default function Home() {
       borderColor: 'border-teal-300 dark:border-teal-700',
       links: [
         {
-          name: "Triple Sport Analyzer",
-          url: "https://triple-sport-analyzer.lovable.app/",
-          description: "Comprehensive multi-sport analysis and content generation platform",
+          name: "Cricket Insights Pro",
+          url: "https://insights-frontend-1.vercel.app/",
+          description: "AI-Powered Match Analytics & Strategy with 6 AI Agents for cricket",
           color: "bg-teal-600",
+        },
+        {
+          name: "Sports Preview Viz",
+          url: "https://sports-preview-viz.lovable.app/",
+          description: "Advanced sports data visualization and preview analytics platform",
+          color: "bg-purple-600",
         },
       ]
     },
@@ -108,7 +121,14 @@ export default function Home() {
       icon: '👥',
       color: 'bg-indigo-100 dark:bg-indigo-900/30',
       borderColor: 'border-indigo-300 dark:border-indigo-700',
-      links: []
+      links: [
+        {
+          name: "IPL Opposition Planning",
+          url: "https://ipl-opposition-planning-frontend.vercel.app/",
+          description: "IPL opposition planning and strategic analysis tool",
+          color: "bg-orange-600",
+        },
+      ]
     },
     {
       id: 'miscellaneous',
@@ -124,18 +144,6 @@ export default function Home() {
           color: "bg-purple-600",
         },
         {
-          name: "NBA",
-          url: "https://nba-frontend-woad.vercel.app/",
-          description: "NBA betting platform and statistics",
-          color: "bg-red-600",
-        },
-        {
-          name: "Premier League",
-          url: "https://epl-frontend-oqbw.vercel.app/",
-          description: "Premier League betting assistant with real-time insights",
-          color: "bg-green-600",
-        },
-        {
           name: "Fantasy Team Builder",
           url: "https://ipl-fantsay1004-git-main-mayurs-projects-b6048be7.vercel.app/",
           description: "AI-Powered Fantasy Team Builder for cricket matches",
@@ -146,12 +154,6 @@ export default function Home() {
           url: "https://ipl-040725-frontend.vercel.app/",
           description: "IPL cricket platform with enhanced features and insights",
           color: "bg-indigo-600",
-        },
-        {
-          name: "IPL Opposition Planning",
-          url: "https://ipl-opposition-planning-frontend.vercel.app/",
-          description: "IPL opposition planning and strategic analysis tool",
-          color: "bg-orange-600",
         },
         {
           name: "BBL AI Batting",
