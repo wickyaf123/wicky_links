@@ -77,6 +77,14 @@ export default function Home() {
       icon: '🔧',
       color: 'bg-green-100 dark:bg-green-900/30',
       borderColor: 'border-green-300 dark:border-green-700',
+      links: []
+    },
+    {
+      id: 'byob',
+      title: 'BYOB (Build Your Own Bet)',
+      icon: '🎯',
+      color: 'bg-orange-100 dark:bg-orange-900/30',
+      borderColor: 'border-orange-300 dark:border-orange-700',
       links: [
         {
           name: "Multi Builder",
@@ -87,26 +95,12 @@ export default function Home() {
       ]
     },
     {
-      id: 'byob',
-      title: 'BYOB (Build Your Own Bet)',
-      icon: '🎯',
-      color: 'bg-orange-100 dark:bg-orange-900/30',
-      borderColor: 'border-orange-300 dark:border-orange-700',
-      links: []
-    },
-    {
       id: 'content-generator',
       title: 'Content Generator',
       icon: '✍️',
       color: 'bg-teal-100 dark:bg-teal-900/30',
       borderColor: 'border-teal-300 dark:border-teal-700',
       links: [
-        {
-          name: "Cricket Insights Pro",
-          url: "https://insights-frontend-1.vercel.app/",
-          description: "AI-Powered Match Analytics & Strategy with 6 AI Agents for cricket",
-          color: "bg-teal-600",
-        },
         {
           name: "Sports Preview Viz",
           url: "https://sports-preview-viz.lovable.app/",
@@ -128,6 +122,12 @@ export default function Home() {
           description: "IPL opposition planning and strategic analysis tool",
           color: "bg-orange-600",
         },
+        {
+          name: "IPL Platform",
+          url: "https://ipl-040725-frontend.vercel.app/",
+          description: "IPL cricket platform with enhanced features and insights",
+          color: "bg-indigo-600",
+        },
       ]
     },
     {
@@ -144,16 +144,16 @@ export default function Home() {
           color: "bg-purple-600",
         },
         {
+          name: "Cricket Insights Pro",
+          url: "https://insights-frontend-1.vercel.app/",
+          description: "AI-Powered Match Analytics & Strategy with 6 AI Agents for cricket",
+          color: "bg-teal-600",
+        },
+        {
           name: "Fantasy Team Builder",
           url: "https://ipl-fantsay1004-git-main-mayurs-projects-b6048be7.vercel.app/",
           description: "AI-Powered Fantasy Team Builder for cricket matches",
           color: "bg-yellow-600",
-        },
-        {
-          name: "IPL Platform",
-          url: "https://ipl-040725-frontend.vercel.app/",
-          description: "IPL cricket platform with enhanced features and insights",
-          color: "bg-indigo-600",
         },
         {
           name: "BBL AI Batting",
