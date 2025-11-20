@@ -18,8 +18,6 @@ export default function Home() {
       id: 'chatbots',
       title: 'Chatbots',
       icon: '🤖',
-      color: 'bg-blue-100 dark:bg-blue-900/30',
-      borderColor: 'border-blue-300 dark:border-blue-700',
       links: [
         {
           name: "Cricket Chatbots",
@@ -39,8 +37,6 @@ export default function Home() {
       id: 'live',
       title: 'Live',
       icon: '📺',
-      color: 'bg-red-100 dark:bg-red-900/30',
-      borderColor: 'border-red-300 dark:border-red-700',
       links: [
         {
           name: "NBA",
@@ -60,8 +56,6 @@ export default function Home() {
       id: 'ai-insights',
       title: 'AI Insights',
       icon: '🧠',
-      color: 'bg-purple-100 dark:bg-purple-900/30',
-      borderColor: 'border-purple-300 dark:border-purple-700',
       links: [
         {
           name: "Triple Sport Analyzer",
@@ -75,16 +69,12 @@ export default function Home() {
       id: 'multi-builder',
       title: 'Multi Builder',
       icon: '🔧',
-      color: 'bg-green-100 dark:bg-green-900/30',
-      borderColor: 'border-green-300 dark:border-green-700',
       links: []
     },
     {
       id: 'byob',
       title: 'BYOB (Build Your Own Bet)',
       icon: '🎯',
-      color: 'bg-orange-100 dark:bg-orange-900/30',
-      borderColor: 'border-orange-300 dark:border-orange-700',
       links: [
         {
           name: "Multi Builder",
@@ -98,8 +88,6 @@ export default function Home() {
       id: 'content-generator',
       title: 'Content Generator',
       icon: '✍️',
-      color: 'bg-teal-100 dark:bg-teal-900/30',
-      borderColor: 'border-teal-300 dark:border-teal-700',
       links: [
         {
           name: "Sports Preview Viz",
@@ -113,8 +101,6 @@ export default function Home() {
       id: 'teams',
       title: 'Teams',
       icon: '👥',
-      color: 'bg-indigo-100 dark:bg-indigo-900/30',
-      borderColor: 'border-indigo-300 dark:border-indigo-700',
       links: [
         {
           name: "IPL Opposition Planning",
@@ -134,8 +120,6 @@ export default function Home() {
       id: 'miscellaneous',
       title: 'Miscellaneous',
       icon: '📦',
-      color: 'bg-gray-100 dark:bg-gray-800/30',
-      borderColor: 'border-gray-300 dark:border-gray-600',
       links: [
         {
           name: "Wicky Main",
@@ -166,36 +150,36 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900 py-10 px-4">
+    <div className="min-h-screen bg-[hsl(216,32%,15%)] py-10 px-4">
       <div className="max-w-4xl mx-auto">
         <header className="mb-12 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-gray-800 dark:text-white">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-[hsl(168,100%,95%)]">
             Wicky Links
           </h1>
-          <p className="text-lg text-gray-600 dark:text-gray-300">
+          <p className="text-lg text-[hsl(168,30%,70%)]">
             Your gateway to various Wicky products and platforms
           </p>
         </header>
 
         <div className="space-y-6">
           {categories.map((category) => (
-            <div key={category.id} className={`border-2 rounded-xl overflow-hidden ${category.borderColor} ${category.color}`}>
+            <div key={category.id} className="border-2 border-[hsl(216,24%,25%)] bg-[hsl(216,28%,18%)] rounded-xl overflow-hidden shadow-lg">
               {/* Category Header */}
               <button
                 onClick={() => toggleCategory(category.id)}
-                className="w-full p-6 flex items-center justify-between hover:bg-opacity-80 transition-all duration-200"
+                className="w-full p-6 flex items-center justify-between hover:bg-[hsl(216,28%,22%)] transition-all duration-300 ease-out"
               >
                 <div className="flex items-center space-x-4">
                   <span className="text-2xl">{category.icon}</span>
-                  <h2 className="text-xl font-semibold text-gray-800 dark:text-white">
+                  <h2 className="text-xl font-semibold text-[hsl(168,100%,95%)]">
                     {category.title}
                   </h2>
-                  <span className="text-sm text-gray-600 dark:text-gray-400 bg-white dark:bg-gray-700 px-2 py-1 rounded-full">
+                  <span className="text-sm text-[hsl(168,30%,70%)] bg-[hsl(216,32%,15%)] px-2 py-1 rounded-full border border-[hsl(216,24%,25%)]">
                     {category.links.length} {category.links.length === 1 ? 'platform' : 'platforms'}
                   </span>
                 </div>
                 <div className={`transform transition-transform duration-200 ${openCategories.includes(category.id) ? 'rotate-180' : ''}`}>
-                  <svg className="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-[hsl(168,30%,70%)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -203,7 +187,7 @@ export default function Home() {
 
               {/* Category Content */}
               {openCategories.includes(category.id) && (
-                <div className="border-t border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-800 p-6">
+                <div className="border-t border-[hsl(216,24%,25%)] bg-[hsl(216,32%,15%)] p-6">
                   {category.links.length > 0 ? (
                     <div className="grid gap-4 md:grid-cols-2">
                       {category.links.map((link, index) => (
@@ -212,19 +196,19 @@ export default function Home() {
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="group block p-4 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-all duration-200 transform hover:-translate-y-1 hover:shadow-md"
+                          className="group block p-4 bg-[hsl(216,28%,18%)] rounded-lg hover:bg-[hsl(216,28%,22%)] transition-all duration-300 ease-out transform hover:-translate-y-1 hover:shadow-[0_0_20px_hsl(168,100%,45%,0.2)] border border-[hsl(216,24%,25%)] hover:border-[hsl(168,100%,45%)]"
                         >
                           <div className="flex items-center mb-3">
-                            <div className={`w-10 h-10 rounded-full ${link.color} flex items-center justify-center text-white font-bold text-sm`}>
+                            <div className={`w-10 h-10 rounded-full ${link.color} flex items-center justify-center text-white font-bold text-sm shadow-[0_0_10px_hsl(168,100%,45%,0.3)]`}>
                               {link.name.charAt(0)}
                             </div>
-                            <h3 className="ml-3 text-lg font-semibold text-gray-800 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                            <h3 className="ml-3 text-lg font-semibold text-[hsl(168,100%,95%)] group-hover:text-[hsl(168,100%,45%)] transition-colors duration-300">
                               {link.name}
                             </h3>
                           </div>
-                          <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{link.description}</p>
+                          <p className="text-sm text-[hsl(168,30%,70%)] mb-3">{link.description}</p>
                           <div className="flex justify-end">
-                            <span className="text-blue-600 dark:text-blue-400 font-medium text-sm group-hover:underline">
+                            <span className="text-[hsl(168,100%,45%)] font-medium text-sm group-hover:underline">
                               Visit Site →
                             </span>
                           </div>
@@ -233,7 +217,7 @@ export default function Home() {
                     </div>
                   ) : (
                     <div className="text-center py-8">
-                      <p className="text-gray-500 dark:text-gray-400 text-sm">
+                      <p className="text-[hsl(168,30%,70%)] text-sm">
                         No platforms available in this category yet.
                       </p>
                     </div>
@@ -244,7 +228,7 @@ export default function Home() {
           ))}
         </div>
 
-        <footer className="mt-16 text-center text-gray-500 dark:text-gray-400 text-sm">
+        <footer className="mt-16 text-center text-[hsl(168,30%,70%)] text-sm">
           <p>© {new Date().getFullYear()} Wicky Links. All rights reserved.</p>
         </footer>
       </div>
