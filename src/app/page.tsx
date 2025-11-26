@@ -90,9 +90,9 @@ export default function Home() {
       icon: '✍️',
       links: [
         {
-          name: "Sports Preview Viz",
-          url: "https://sports-preview-viz.lovable.app/",
-          description: "Advanced sports data visualization and preview analytics platform",
+          name: "Content Generator MVP",
+          url: "https://content-generator-mvp.vercel.app/",
+          description: "Advanced content generation platform for sports analytics and insights",
           color: "bg-purple-600",
         },
       ]
