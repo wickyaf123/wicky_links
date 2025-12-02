@@ -58,9 +58,9 @@ export default function Home() {
       icon: '🧠',
       links: [
         {
-          name: "Triple Sport Analyzer",
-          url: "https://triple-sport-analyzer.lovable.app/",
-          description: "Comprehensive multi-sport analysis and content generation platform",
+          name: "AI Insights",
+          url: "https://ai-insights-mu.vercel.app/",
+          description: "Advanced AI-powered insights and analytics for sports data",
           color: "bg-teal-600",
         },
       ]
@@ -90,7 +90,7 @@ export default function Home() {
       icon: '✍️',
       links: [
         {
-          name: "Content Generator MVP",
+          name: "Content Generator",
           url: "https://content-generator-mvp.vercel.app/",
           description: "Advanced content generation platform for sports analytics and insights",
           color: "bg-purple-600",
