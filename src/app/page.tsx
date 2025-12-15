@@ -63,6 +63,12 @@ export default function Home() {
           description: "Advanced AI-powered insights and analytics for sports data",
           color: "bg-teal-600",
         },
+        {
+          name: "AI Insights Pro",
+          url: "https://ai-insights-pro-frontend.vercel.app/",
+          description: "Professional-grade AI insights platform with enhanced analytics capabilities",
+          color: "bg-purple-600",
+        },
       ]
     },
     {
