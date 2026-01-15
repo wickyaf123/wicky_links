@@ -69,6 +69,12 @@ export default function Home() {
           description: "Professional-grade AI insights platform with enhanced analytics capabilities",
           color: "bg-purple-600",
         },
+        {
+          name: "IPL AI Agents",
+          url: "https://iplaapaiagents-mjt4txdrqjc8aha3wabvkh.streamlit.app/",
+          description: "IPL-focused AI agents for advanced cricket analytics and insights",
+          color: "bg-indigo-600",
+        },
       ]
     },
     {
@@ -150,6 +156,12 @@ export default function Home() {
           url: "https://bbl-ai-batting-frontend.vercel.app/",
           description: "BBL batting analytics with AI-powered insights and statistics",
           color: "bg-pink-600",
+        },
+        {
+          name: "Wicky Sphere Icons",
+          url: "https://wicky-sphere-icons.lovable.app/",
+          description: "Interactive sphere-based icon system and design resources",
+          color: "bg-cyan-600",
         },
       ]
     },
