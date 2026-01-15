@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 export default function Home() {
-  const [openCategories, setOpenCategories] = useState<string[]>(['wicky-website']);
+  const [openCategories, setOpenCategories] = useState<string[]>(['chatbots']);
 
   const toggleCategory = (categoryId: string) => {
     setOpenCategories(prev => 
@@ -14,19 +14,6 @@ export default function Home() {
   };
 
   const categories = [
-    {
-      id: 'wicky-website',
-      title: 'Wicky Website',
-      icon: '🌐',
-      links: [
-        {
-          name: "Wicky Sphere Icons",
-          url: "https://wicky-sphere-icons.lovable.app/",
-          description: "Official Wicky website with interactive sphere-based design",
-          color: "bg-purple-600",
-        },
-      ]
-    },
     {
       id: 'chatbots',
       title: 'Chatbots',
@@ -169,6 +156,12 @@ export default function Home() {
           url: "https://bbl-ai-batting-frontend.vercel.app/",
           description: "BBL batting analytics with AI-powered insights and statistics",
           color: "bg-pink-600",
+        },
+        {
+          name: "Wicky Sphere Icons",
+          url: "https://wicky-sphere-icons.lovable.app/",
+          description: "Interactive sphere-based icon system and design resources",
+          color: "bg-cyan-600",
         },
       ]
     },
