@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 export default function Home() {
-  const [openCategories, setOpenCategories] = useState<string[]>(['chatbots']);
+  const [openCategories, setOpenCategories] = useState<string[]>(['main-links']);
 
   const toggleCategory = (categoryId: string) => {
     setOpenCategories(prev => 
@@ -14,6 +14,37 @@ export default function Home() {
   };
 
   const categories = [
+    {
+      id: 'main-links',
+      title: 'Main Links',
+      icon: '⭐',
+      links: [
+        {
+          name: "Wicky Main",
+          url: "https://wicky-alpha.vercel.app/",
+          description: "The main Wicky platform for sports betting and more",
+          color: "bg-purple-600",
+        },
+        {
+          name: "Chat Final",
+          url: "https://chatfinalfrontend.vercel.app/",
+          description: "Advanced chat interface with enhanced features and functionality",
+          color: "bg-slate-600",
+        },
+        {
+          name: "AI Insights Pro",
+          url: "https://ai-insights-pro-frontend.vercel.app/",
+          description: "Professional-grade AI insights platform with enhanced analytics capabilities",
+          color: "bg-purple-600",
+        },
+        {
+          name: "Content Generator",
+          url: "https://content-generator-mvp.vercel.app/",
+          description: "Advanced content generation platform for sports analytics and insights",
+          color: "bg-teal-600",
+        },
+      ]
+    },
     {
       id: 'chatbots',
       title: 'Chatbots',
