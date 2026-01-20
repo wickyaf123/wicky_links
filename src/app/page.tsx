@@ -101,7 +101,7 @@ export default function Home() {
           color: "bg-purple-600",
         },
         {
-          name: "IPL AI Agents",
+          name: "Cricket AI Agents Project",
           url: "https://iplaapaiagents-mjt4txdrqjc8aha3wabvkh.streamlit.app/",
           description: "IPL-focused AI agents for advanced cricket analytics and insights",
           color: "bg-indigo-600",
@@ -189,7 +189,7 @@ export default function Home() {
           color: "bg-pink-600",
         },
         {
-          name: "Wicky Sphere Icons",
+          name: "New Wicky Website",
           url: "https://wicky-sphere-icons.lovable.app/",
           description: "Interactive sphere-based icon system and design resources",
           color: "bg-cyan-600",
