@@ -190,7 +190,7 @@ export default function Home() {
         },
         {
           name: "New Wicky Website",
-          url: "https://wicky-sphere-icons.lovable.app/",
+          url: "https://wicky-sphere-icons.vercel.app/",
           description: "Interactive sphere-based icon system and design resources",
           color: "bg-cyan-600",
         },
