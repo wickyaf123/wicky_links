@@ -1,19 +1,33 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+
+interface Link {
+  name: string;
+  url: string;
+  description: string;
+  color: string;
+}
+
+interface Category {
+  id: string;
+  title: string;
+  icon: string;
+  links: Link[];
+}
 
 export default function Home() {
   const [openCategories, setOpenCategories] = useState<string[]>(['main-links']);
+  const [showAddLinkModal, setShowAddLinkModal] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [newLink, setNewLink] = useState<Link>({
+    name: '',
+    url: '',
+    description: '',
+    color: 'bg-purple-600'
+  });
 
-  const toggleCategory = (categoryId: string) => {
-    setOpenCategories(prev => 
-      prev.includes(categoryId) 
-        ? prev.filter(id => id !== categoryId)
-        : [...prev, categoryId]
-    );
-  };
-
-  const categories = [
+  const initialCategories: Category[] = [
     {
       id: 'main-links',
       title: 'Main Links',
@@ -204,6 +218,102 @@ export default function Home() {
     },
   ];
 
+  const [categories, setCategories] = useState<Category[]>(initialCategories);
+
+  // Load categories from localStorage on mount
+  useEffect(() => {
+    const savedCategories = localStorage.getItem('wickyLinksCategories');
+    if (savedCategories) {
+      try {
+        setCategories(JSON.parse(savedCategories));
+      } catch (error) {
+        console.error('Error loading saved categories:', error);
+      }
+    }
+  }, []);
+
+  // Save categories to localStorage whenever they change
+  useEffect(() => {
+    if (categories.length > 0) {
+      localStorage.setItem('wickyLinksCategories', JSON.stringify(categories));
+    }
+  }, [categories]);
+
+  const toggleCategory = (categoryId: string) => {
+    setOpenCategories(prev => 
+      prev.includes(categoryId) 
+        ? prev.filter(id => id !== categoryId)
+        : [...prev, categoryId]
+    );
+  };
+
+  const openAddLinkModal = (categoryId: string) => {
+    setSelectedCategory(categoryId);
+    setNewLink({
+      name: '',
+      url: '',
+      description: '',
+      color: 'bg-purple-600'
+    });
+    setShowAddLinkModal(true);
+  };
+
+  const closeAddLinkModal = () => {
+    setShowAddLinkModal(false);
+    setSelectedCategory('');
+    setNewLink({
+      name: '',
+      url: '',
+      description: '',
+      color: 'bg-purple-600'
+    });
+  };
+
+  const handleAddLink = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!newLink.name || !newLink.url) {
+      alert('Please fill in at least the name and URL');
+      return;
+    }
+
+    setCategories(prev => 
+      prev.map(category => 
+        category.id === selectedCategory
+          ? { ...category, links: [...category.links, newLink] }
+          : category
+      )
+    );
+
+    closeAddLinkModal();
+  };
+
+  const handleDeleteLink = (categoryId: string, linkIndex: number) => {
+    if (confirm('Are you sure you want to delete this link?')) {
+      setCategories(prev =>
+        prev.map(category =>
+          category.id === categoryId
+            ? { ...category, links: category.links.filter((_, index) => index !== linkIndex) }
+            : category
+        )
+      );
+    }
+  };
+
+  const colorOptions = [
+    { name: 'Purple', value: 'bg-purple-600' },
+    { name: 'Blue', value: 'bg-blue-600' },
+    { name: 'Green', value: 'bg-green-600' },
+    { name: 'Red', value: 'bg-red-600' },
+    { name: 'Orange', value: 'bg-orange-600' },
+    { name: 'Yellow', value: 'bg-yellow-600' },
+    { name: 'Pink', value: 'bg-pink-600' },
+    { name: 'Teal', value: 'bg-teal-600' },
+    { name: 'Cyan', value: 'bg-cyan-600' },
+    { name: 'Indigo', value: 'bg-indigo-600' },
+    { name: 'Slate', value: 'bg-slate-600' },
+  ];
+
   return (
     <div className="min-h-screen bg-[hsl(216,32%,15%)] py-10 px-4">
       <div className="max-w-4xl mx-auto">
@@ -243,31 +353,50 @@ export default function Home() {
               {/* Category Content */}
               {openCategories.includes(category.id) && (
                 <div className="border-t border-[hsl(216,24%,25%)] bg-[hsl(216,32%,15%)] p-6">
+                  <div className="mb-4 flex justify-end">
+                    <button
+                      onClick={() => openAddLinkModal(category.id)}
+                      className="px-4 py-2 bg-[hsl(168,100%,45%)] text-[hsl(216,32%,15%)] rounded-lg font-semibold hover:bg-[hsl(168,100%,55%)] transition-all duration-300 ease-out transform hover:-translate-y-0.5 shadow-[0_0_10px_hsl(168,100%,45%,0.3)]"
+                    >
+                      + Add Link
+                    </button>
+                  </div>
                   {category.links.length > 0 ? (
                     <div className="grid gap-4 md:grid-cols-2">
                       {category.links.map((link, index) => (
-                        <a
+                        <div
                           key={index}
-                          href={link.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group block p-4 bg-[hsl(216,28%,18%)] rounded-lg hover:bg-[hsl(216,28%,22%)] transition-all duration-300 ease-out transform hover:-translate-y-1 hover:shadow-[0_0_20px_hsl(168,100%,45%,0.2)] border border-[hsl(216,24%,25%)] hover:border-[hsl(168,100%,45%)]"
+                          className="relative group block p-4 bg-[hsl(216,28%,18%)] rounded-lg hover:bg-[hsl(216,28%,22%)] transition-all duration-300 ease-out transform hover:-translate-y-1 hover:shadow-[0_0_20px_hsl(168,100%,45%,0.2)] border border-[hsl(216,24%,25%)] hover:border-[hsl(168,100%,45%)]"
                         >
-                          <div className="flex items-center mb-3">
-                            <div className={`w-10 h-10 rounded-full ${link.color} flex items-center justify-center text-white font-bold text-sm shadow-[0_0_10px_hsl(168,100%,45%,0.3)]`}>
-                              {link.name.charAt(0)}
+                          <button
+                            onClick={() => handleDeleteLink(category.id, index)}
+                            className="absolute top-2 right-2 w-6 h-6 bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-xs font-bold hover:bg-red-700"
+                            title="Delete link"
+                          >
+                            ✕
+                          </button>
+                          <a
+                            href={link.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block"
+                          >
+                            <div className="flex items-center mb-3">
+                              <div className={`w-10 h-10 rounded-full ${link.color} flex items-center justify-center text-white font-bold text-sm shadow-[0_0_10px_hsl(168,100%,45%,0.3)]`}>
+                                {link.name.charAt(0)}
+                              </div>
+                              <h3 className="ml-3 text-lg font-semibold text-[hsl(168,100%,95%)] group-hover:text-[hsl(168,100%,45%)] transition-colors duration-300">
+                                {link.name}
+                              </h3>
                             </div>
-                            <h3 className="ml-3 text-lg font-semibold text-[hsl(168,100%,95%)] group-hover:text-[hsl(168,100%,45%)] transition-colors duration-300">
-                              {link.name}
-                            </h3>
-                          </div>
-                          <p className="text-sm text-[hsl(168,30%,70%)] mb-3">{link.description}</p>
-                          <div className="flex justify-end">
-                            <span className="text-[hsl(168,100%,45%)] font-medium text-sm group-hover:underline">
-                              Visit Site →
-                            </span>
-                          </div>
-                        </a>
+                            <p className="text-sm text-[hsl(168,30%,70%)] mb-3">{link.description}</p>
+                            <div className="flex justify-end">
+                              <span className="text-[hsl(168,100%,45%)] font-medium text-sm group-hover:underline">
+                                Visit Site →
+                              </span>
+                            </div>
+                          </a>
+                        </div>
                       ))}
                     </div>
                   ) : (
@@ -282,6 +411,107 @@ export default function Home() {
             </div>
           ))}
         </div>
+
+        {/* Add Link Modal */}
+        {showAddLinkModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
+            <div className="bg-[hsl(216,28%,18%)] rounded-xl shadow-2xl border-2 border-[hsl(168,100%,45%)] max-w-md w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-2xl font-bold text-[hsl(168,100%,95%)]">
+                    Add New Link
+                  </h3>
+                  <button
+                    onClick={closeAddLinkModal}
+                    className="w-8 h-8 bg-[hsl(216,32%,15%)] text-[hsl(168,30%,70%)] rounded-full hover:bg-red-600 hover:text-white transition-all duration-200 flex items-center justify-center font-bold"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <form onSubmit={handleAddLink} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-[hsl(168,100%,95%)] mb-2">
+                      Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={newLink.name}
+                      onChange={(e) => setNewLink({ ...newLink, name: e.target.value })}
+                      className="w-full px-4 py-2 bg-[hsl(216,32%,15%)] text-[hsl(168,100%,95%)] border border-[hsl(216,24%,25%)] rounded-lg focus:outline-none focus:border-[hsl(168,100%,45%)] transition-colors"
+                      placeholder="e.g., My Platform"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-[hsl(168,100%,95%)] mb-2">
+                      URL <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="url"
+                      value={newLink.url}
+                      onChange={(e) => setNewLink({ ...newLink, url: e.target.value })}
+                      className="w-full px-4 py-2 bg-[hsl(216,32%,15%)] text-[hsl(168,100%,95%)] border border-[hsl(216,24%,25%)] rounded-lg focus:outline-none focus:border-[hsl(168,100%,45%)] transition-colors"
+                      placeholder="https://example.com"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-[hsl(168,100%,95%)] mb-2">
+                      Description
+                    </label>
+                    <textarea
+                      value={newLink.description}
+                      onChange={(e) => setNewLink({ ...newLink, description: e.target.value })}
+                      className="w-full px-4 py-2 bg-[hsl(216,32%,15%)] text-[hsl(168,100%,95%)] border border-[hsl(216,24%,25%)] rounded-lg focus:outline-none focus:border-[hsl(168,100%,45%)] transition-colors resize-none"
+                      placeholder="Brief description of the platform"
+                      rows={3}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-[hsl(168,100%,95%)] mb-2">
+                      Color
+                    </label>
+                    <div className="grid grid-cols-4 gap-2">
+                      {colorOptions.map((color) => (
+                        <button
+                          key={color.value}
+                          type="button"
+                          onClick={() => setNewLink({ ...newLink, color: color.value })}
+                          className={`h-10 rounded-lg ${color.value} transition-all duration-200 ${
+                            newLink.color === color.value
+                              ? 'ring-4 ring-[hsl(168,100%,45%)] scale-105'
+                              : 'hover:scale-105'
+                          }`}
+                          title={color.name}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3 pt-4">
+                    <button
+                      type="button"
+                      onClick={closeAddLinkModal}
+                      className="flex-1 px-4 py-2 bg-[hsl(216,32%,15%)] text-[hsl(168,30%,70%)] rounded-lg font-semibold hover:bg-[hsl(216,24%,25%)] transition-all duration-200"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="flex-1 px-4 py-2 bg-[hsl(168,100%,45%)] text-[hsl(216,32%,15%)] rounded-lg font-semibold hover:bg-[hsl(168,100%,55%)] transition-all duration-200 shadow-[0_0_15px_hsl(168,100%,45%,0.4)]"
+                    >
+                      Add Link
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        )}
 
         <footer className="mt-16 text-center text-[hsl(168,30%,70%)] text-sm">
           <p>© {new Date().getFullYear()} Wicky Links. All rights reserved.</p>
