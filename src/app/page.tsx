@@ -152,6 +152,12 @@ export default function Home() {
           color: "bg-orange-600",
         },
         {
+          name: "IPL Opposition Points",
+          url: "https://iploppositionpointsgit-mrmnvdru3prb5azsqkhndd.streamlit.app/",
+          description: "IPL opposition points analysis tool",
+          color: "bg-orange-600",
+        },
+        {
           name: "IPL Platform",
           url: "https://ipl-040725-frontend.vercel.app/",
           description: "IPL cricket platform with enhanced features and insights",
