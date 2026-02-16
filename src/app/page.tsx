@@ -19,8 +19,16 @@ interface Category {
 export default function Home() {
   const [openCategories, setOpenCategories] = useState<string[]>(['main-links']);
   const [showAddLinkModal, setShowAddLinkModal] = useState(false);
+  const [showEditLinkModal, setShowEditLinkModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [editingLinkIndex, setEditingLinkIndex] = useState<number>(-1);
   const [newLink, setNewLink] = useState<Link>({
+    name: '',
+    url: '',
+    description: '',
+    color: 'bg-purple-600'
+  });
+  const [editLink, setEditLink] = useState<Link>({
     name: '',
     url: '',
     description: '',
@@ -300,6 +308,52 @@ export default function Home() {
     }
   };
 
+  const openEditLinkModal = (categoryId: string, linkIndex: number) => {
+    const category = categories.find(cat => cat.id === categoryId);
+    if (category && category.links[linkIndex]) {
+      setSelectedCategory(categoryId);
+      setEditingLinkIndex(linkIndex);
+      setEditLink({ ...category.links[linkIndex] });
+      setShowEditLinkModal(true);
+    }
+  };
+
+  const closeEditLinkModal = () => {
+    setShowEditLinkModal(false);
+    setSelectedCategory('');
+    setEditingLinkIndex(-1);
+    setEditLink({
+      name: '',
+      url: '',
+      description: '',
+      color: 'bg-purple-600'
+    });
+  };
+
+  const handleUpdateLink = (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!editLink.name || !editLink.url) {
+      alert('Please fill in at least the name and URL');
+      return;
+    }
+
+    setCategories(prev =>
+      prev.map(category =>
+        category.id === selectedCategory
+          ? {
+              ...category,
+              links: category.links.map((link, index) =>
+                index === editingLinkIndex ? editLink : link
+              )
+            }
+          : category
+      )
+    );
+
+    closeEditLinkModal();
+  };
+
   const colorOptions = [
     { name: 'Purple', value: 'bg-purple-600' },
     { name: 'Blue', value: 'bg-blue-600' },
@@ -369,7 +423,20 @@ export default function Home() {
                           className="relative group block p-4 bg-[hsl(216,28%,18%)] rounded-lg hover:bg-[hsl(216,28%,22%)] transition-all duration-300 ease-out transform hover:-translate-y-1 hover:shadow-[0_0_20px_hsl(168,100%,45%,0.2)] border border-[hsl(216,24%,25%)] hover:border-[hsl(168,100%,45%)]"
                         >
                           <button
-                            onClick={() => handleDeleteLink(category.id, index)}
+                            onClick={(e) => {
+                              e.preventDefault();
+                              openEditLinkModal(category.id, index);
+                            }}
+                            className="absolute top-2 right-10 w-6 h-6 bg-blue-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-xs font-bold hover:bg-blue-700"
+                            title="Edit link"
+                          >
+                            ✎
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleDeleteLink(category.id, index);
+                            }}
                             className="absolute top-2 right-2 w-6 h-6 bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-xs font-bold hover:bg-red-700"
                             title="Delete link"
                           >
@@ -505,6 +572,107 @@ export default function Home() {
                       className="flex-1 px-4 py-2 bg-[hsl(168,100%,45%)] text-[hsl(216,32%,15%)] rounded-lg font-semibold hover:bg-[hsl(168,100%,55%)] transition-all duration-200 shadow-[0_0_15px_hsl(168,100%,45%,0.4)]"
                     >
                       Add Link
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Edit Link Modal */}
+        {showEditLinkModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
+            <div className="bg-[hsl(216,28%,18%)] rounded-xl shadow-2xl border-2 border-[hsl(168,100%,45%)] max-w-md w-full max-h-[90vh] overflow-y-auto">
+              <div className="p-6">
+                <div className="flex justify-between items-center mb-6">
+                  <h3 className="text-2xl font-bold text-[hsl(168,100%,95%)]">
+                    Edit Link
+                  </h3>
+                  <button
+                    onClick={closeEditLinkModal}
+                    className="w-8 h-8 bg-[hsl(216,32%,15%)] text-[hsl(168,30%,70%)] rounded-full hover:bg-red-600 hover:text-white transition-all duration-200 flex items-center justify-center font-bold"
+                  >
+                    ✕
+                  </button>
+                </div>
+
+                <form onSubmit={handleUpdateLink} className="space-y-4">
+                  <div>
+                    <label className="block text-sm font-semibold text-[hsl(168,100%,95%)] mb-2">
+                      Name <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={editLink.name}
+                      onChange={(e) => setEditLink({ ...editLink, name: e.target.value })}
+                      className="w-full px-4 py-2 bg-[hsl(216,32%,15%)] text-[hsl(168,100%,95%)] border border-[hsl(216,24%,25%)] rounded-lg focus:outline-none focus:border-[hsl(168,100%,45%)] transition-colors"
+                      placeholder="e.g., My Platform"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-[hsl(168,100%,95%)] mb-2">
+                      URL <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="url"
+                      value={editLink.url}
+                      onChange={(e) => setEditLink({ ...editLink, url: e.target.value })}
+                      className="w-full px-4 py-2 bg-[hsl(216,32%,15%)] text-[hsl(168,100%,95%)] border border-[hsl(216,24%,25%)] rounded-lg focus:outline-none focus:border-[hsl(168,100%,45%)] transition-colors"
+                      placeholder="https://example.com"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-[hsl(168,100%,95%)] mb-2">
+                      Description
+                    </label>
+                    <textarea
+                      value={editLink.description}
+                      onChange={(e) => setEditLink({ ...editLink, description: e.target.value })}
+                      className="w-full px-4 py-2 bg-[hsl(216,32%,15%)] text-[hsl(168,100%,95%)] border border-[hsl(216,24%,25%)] rounded-lg focus:outline-none focus:border-[hsl(168,100%,45%)] transition-colors resize-none"
+                      placeholder="Brief description of the platform"
+                      rows={3}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-semibold text-[hsl(168,100%,95%)] mb-2">
+                      Color
+                    </label>
+                    <div className="grid grid-cols-4 gap-2">
+                      {colorOptions.map((color) => (
+                        <button
+                          key={color.value}
+                          type="button"
+                          onClick={() => setEditLink({ ...editLink, color: color.value })}
+                          className={`h-10 rounded-lg ${color.value} transition-all duration-200 ${
+                            editLink.color === color.value
+                              ? 'ring-4 ring-[hsl(168,100%,45%)] scale-105'
+                              : 'hover:scale-105'
+                          }`}
+                          title={color.name}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex gap-3 pt-4">
+                    <button
+                      type="button"
+                      onClick={closeEditLinkModal}
+                      className="flex-1 px-4 py-2 bg-[hsl(216,32%,15%)] text-[hsl(168,30%,70%)] rounded-lg font-semibold hover:bg-[hsl(216,24%,25%)] transition-all duration-200"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="flex-1 px-4 py-2 bg-[hsl(168,100%,45%)] text-[hsl(216,32%,15%)] rounded-lg font-semibold hover:bg-[hsl(168,100%,55%)] transition-all duration-200 shadow-[0_0_15px_hsl(168,100%,45%,0.4)]"
+                    >
+                      Update Link
                     </button>
                   </div>
                 </form>
