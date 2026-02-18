@@ -79,6 +79,12 @@ export default function Home() {
           color: "bg-cyan-600",
         },
         {
+          name: "NRL Supercoach Chat",
+          url: "https://supercoach-frontend.vercel.app/",
+          description: "NRL Supercoach chatbot for team and strategy insights",
+          color: "bg-green-600",
+        },
+        {
           name: "Chat Final",
           url: "https://chatfinalfrontend.vercel.app/",
           description: "Advanced chat interface with enhanced features and functionality",
@@ -168,15 +174,21 @@ export default function Home() {
       icon: '👥',
       links: [
         {
-          name: "IPL Opposition Planning",
-          url: "https://ipl-opposition-planning-frontend.vercel.app/",
-          description: "IPL opposition planning and strategic analysis tool",
+          name: "NRL Teams Tool Ben",
+          url: "https://nrl-opposition-pointers.vercel.app/",
+          description: "NRL teams opposition pointers and planning tool",
+          color: "bg-green-600",
+        },
+        {
+          name: "Gaurav Cricket Teams Project",
+          url: "https://iploppositionpointsgit-mrmnvdru3prb5azsqkhndd.streamlit.app/",
+          description: "Cricket teams analysis project by Gaurav",
           color: "bg-orange-600",
         },
         {
-          name: "IPL Opposition Points",
-          url: "https://iploppositionpointsgit-mrmnvdru3prb5azsqkhndd.streamlit.app/",
-          description: "IPL opposition points analysis tool",
+          name: "Tyson Cricket Teams Project",
+          url: "https://ipl-opposition-planning-frontend.vercel.app/",
+          description: "Cricket teams planning project by Tyson",
           color: "bg-orange-600",
         },
         {
