@@ -1,18 +1,22 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { supabase } from '@/lib/supabase';
 
 interface Link {
+  id?: string;
   name: string;
   url: string;
   description: string;
   color: string;
+  sort_order?: number;
 }
 
 interface Category {
   id: string;
   title: string;
   icon: string;
+  sort_order?: number;
   links: Link[];
 }
 
@@ -21,7 +25,7 @@ export default function Home() {
   const [showAddLinkModal, setShowAddLinkModal] = useState(false);
   const [showEditLinkModal, setShowEditLinkModal] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [editingLinkIndex, setEditingLinkIndex] = useState<number>(-1);
+  const [editingLink, setEditingLink] = useState<Link | null>(null);
   const [newLink, setNewLink] = useState<Link>({
     name: '',
     url: '',
@@ -34,234 +38,64 @@ export default function Home() {
     description: '',
     color: 'bg-purple-600'
   });
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const initialCategories: Category[] = [
-    {
-      id: 'main-links',
-      title: 'Main Links',
-      icon: '⭐',
-      links: [
-        {
-          name: "Wicky Main",
-          url: "https://wicky-alpha.vercel.app/",
-          description: "The main Wicky platform for sports betting and more",
-          color: "bg-purple-600",
-        },
-        {
-          name: "Chat Final",
-          url: "https://chatfinalfrontend.vercel.app/",
-          description: "Advanced chat interface with enhanced features and functionality",
-          color: "bg-slate-600",
-        },
-        {
-          name: "AI Insights Pro",
-          url: "https://ai-insights-pro-frontend.vercel.app/",
-          description: "Professional-grade AI insights platform with enhanced analytics capabilities",
-          color: "bg-purple-600",
-        },
-        {
-          name: "Content Generator",
-          url: "https://content-generator-mvp.vercel.app/",
-          description: "Advanced content generation platform for sports analytics and insights",
-          color: "bg-teal-600",
-        },
-      ]
-    },
-    {
-      id: 'chatbots',
-      title: 'Chatbots',
-      icon: '🤖',
-      links: [
-        {
-          name: "Cricket Chatbots",
-          url: "https://chatbots-cric-hor-frontend.vercel.app/",
-          description: "Interactive cricket chatbots for enhanced user engagement and insights",
-          color: "bg-cyan-600",
-        },
-        {
-          name: "NRL Supercoach Chat",
-          url: "https://supercoach-frontend.vercel.app/",
-          description: "NRL Supercoach chatbot for team and strategy insights",
-          color: "bg-green-600",
-        },
-        {
-          name: "Chat Final",
-          url: "https://chatfinalfrontend.vercel.app/",
-          description: "Advanced chat interface with enhanced features and functionality",
-          color: "bg-slate-600",
-        },
-      ]
-    },
-    {
-      id: 'live',
-      title: 'Live',
-      icon: '📺',
-      links: [
-        {
-          name: "NBA",
-          url: "https://nba-frontend-woad.vercel.app/",
-          description: "NBA betting platform and statistics",
-          color: "bg-red-600",
-        },
-        {
-          name: "Premier League",
-          url: "https://epl-frontend-oqbw.vercel.app/",
-          description: "Premier League betting assistant with real-time insights",
-          color: "bg-green-600",
-        },
-      ]
-    },
-    {
-      id: 'ai-insights',
-      title: 'AI Insights',
-      icon: '🧠',
-      links: [
-        {
-          name: "AI Insights",
-          url: "https://ai-insights-mu.vercel.app/",
-          description: "Advanced AI-powered insights and analytics for sports data",
-          color: "bg-teal-600",
-        },
-        {
-          name: "AI Insights Pro",
-          url: "https://ai-insights-pro-frontend.vercel.app/",
-          description: "Professional-grade AI insights platform with enhanced analytics capabilities",
-          color: "bg-purple-600",
-        },
-        {
-          name: "Cricket AI Agents Project",
-          url: "https://iplaapaiagents-mjt4txdrqjc8aha3wabvkh.streamlit.app/",
-          description: "IPL-focused AI agents for advanced cricket analytics and insights",
-          color: "bg-indigo-600",
-        },
-      ]
-    },
-    {
-      id: 'multi-builder',
-      title: 'Multi Builder',
-      icon: '🔧',
-      links: []
-    },
-    {
-      id: 'byob',
-      title: 'BYOB (Build Your Own Bet)',
-      icon: '🎯',
-      links: [
-        {
-          name: "Multi Builder",
-          url: "https://multi-frontend-mu.vercel.app/",
-          description: "Build your multi-bets for NRL, AFL, and combined sports",
-          color: "bg-blue-600",
-        },
-      ]
-    },
-    {
-      id: 'content-generator',
-      title: 'Content Generator',
-      icon: '✍️',
-      links: [
-        {
-          name: "Content Generator",
-          url: "https://content-generator-mvp.vercel.app/",
-          description: "Advanced content generation platform for sports analytics and insights",
-          color: "bg-purple-600",
-        },
-      ]
-    },
-    {
-      id: 'teams',
-      title: 'Teams',
-      icon: '👥',
-      links: [
-        {
-          name: "NRL Teams Tool Ben",
-          url: "https://nrl-opposition-pointers.vercel.app/",
-          description: "NRL teams opposition pointers and planning tool",
-          color: "bg-green-600",
-        },
-        {
-          name: "Gaurav Cricket Teams Project",
-          url: "https://iploppositionpointsgit-mrmnvdru3prb5azsqkhndd.streamlit.app/",
-          description: "Cricket teams analysis project by Gaurav",
-          color: "bg-orange-600",
-        },
-        {
-          name: "Tyson Cricket Teams Project",
-          url: "https://ipl-opposition-planning-frontend.vercel.app/",
-          description: "Cricket teams planning project by Tyson",
-          color: "bg-orange-600",
-        },
-        {
-          name: "IPL Platform",
-          url: "https://ipl-040725-frontend.vercel.app/",
-          description: "IPL cricket platform with enhanced features and insights",
-          color: "bg-indigo-600",
-        },
-      ]
-    },
-    {
-      id: 'miscellaneous',
-      title: 'Miscellaneous',
-      icon: '📦',
-      links: [
-        {
-          name: "Wicky Main",
-          url: "https://wicky-alpha.vercel.app/",
-          description: "The main Wicky platform for sports betting and more",
-          color: "bg-purple-600",
-        },
-        {
-          name: "Cricket Insights Pro",
-          url: "https://insights-frontend-1.vercel.app/",
-          description: "AI-Powered Match Analytics & Strategy with 6 AI Agents for cricket",
-          color: "bg-teal-600",
-        },
-        {
-          name: "Fantasy Team Builder",
-          url: "https://ipl-fantsay1004-git-main-mayurs-projects-b6048be7.vercel.app/",
-          description: "AI-Powered Fantasy Team Builder for cricket matches",
-          color: "bg-yellow-600",
-        },
-        {
-          name: "BBL AI Batting",
-          url: "https://bbl-ai-batting-frontend.vercel.app/",
-          description: "BBL batting analytics with AI-powered insights and statistics",
-          color: "bg-pink-600",
-        },
-        {
-          name: "New Wicky Website",
-          url: "https://wicky-sphere-icons.vercel.app/",
-          description: "Interactive sphere-based icon system and design resources",
-          color: "bg-cyan-600",
-        },
-      ]
-    },
-  ];
+  const fetchCategories = useCallback(async () => {
+    try {
+      setError(null);
 
-  const [categories, setCategories] = useState<Category[]>(initialCategories);
+      // Fetch categories ordered by sort_order
+      const { data: categoriesData, error: catError } = await supabase
+        .from('categories')
+        .select('*')
+        .order('sort_order', { ascending: true });
 
-  // Load categories from localStorage on mount
-  useEffect(() => {
-    const savedCategories = localStorage.getItem('wickyLinksCategories');
-    if (savedCategories) {
-      try {
-        setCategories(JSON.parse(savedCategories));
-      } catch (error) {
-        console.error('Error loading saved categories:', error);
-      }
+      if (catError) throw catError;
+
+      // Fetch all links ordered by sort_order
+      const { data: linksData, error: linksError } = await supabase
+        .from('links')
+        .select('*')
+        .order('sort_order', { ascending: true });
+
+      if (linksError) throw linksError;
+
+      // Combine categories with their links
+      const combined: Category[] = (categoriesData || []).map((cat) => ({
+        id: cat.id,
+        title: cat.title,
+        icon: cat.icon,
+        sort_order: cat.sort_order,
+        links: (linksData || [])
+          .filter((link) => link.category_id === cat.id)
+          .map((link) => ({
+            id: link.id,
+            name: link.name,
+            url: link.url,
+            description: link.description,
+            color: link.color,
+            sort_order: link.sort_order,
+          })),
+      }));
+
+      setCategories(combined);
+    } catch (err) {
+      console.error('Error fetching data:', err);
+      setError('Failed to load data from Supabase. Please ensure the database tables are set up.');
+    } finally {
+      setLoading(false);
     }
   }, []);
 
-  // Save categories to localStorage whenever they change
   useEffect(() => {
-    if (categories.length > 0) {
-      localStorage.setItem('wickyLinksCategories', JSON.stringify(categories));
-    }
-  }, [categories]);
+    fetchCategories();
+  }, [fetchCategories]);
 
   const toggleCategory = (categoryId: string) => {
-    setOpenCategories(prev => 
-      prev.includes(categoryId) 
+    setOpenCategories(prev =>
+      prev.includes(categoryId)
         ? prev.filter(id => id !== categoryId)
         : [...prev, categoryId]
     );
@@ -289,51 +123,78 @@ export default function Home() {
     });
   };
 
-  const handleAddLink = (e: React.FormEvent) => {
+  const handleAddLink = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!newLink.name || !newLink.url) {
       alert('Please fill in at least the name and URL');
       return;
     }
 
-    setCategories(prev => 
-      prev.map(category => 
-        category.id === selectedCategory
-          ? { ...category, links: [...category.links, newLink] }
-          : category
-      )
-    );
+    // Get the current max sort_order for this category
+    const category = categories.find(cat => cat.id === selectedCategory);
+    const maxSortOrder = category
+      ? Math.max(...category.links.map(l => l.sort_order || 0), -1)
+      : 0;
 
+    const { error: insertError } = await supabase
+      .from('links')
+      .insert({
+        category_id: selectedCategory,
+        name: newLink.name,
+        url: newLink.url,
+        description: newLink.description || '',
+        color: newLink.color,
+        sort_order: maxSortOrder + 1,
+      });
+
+    if (insertError) {
+      console.error('Error adding link:', insertError);
+      alert('Failed to add link. Please try again.');
+      return;
+    }
+
+    await fetchCategories();
     closeAddLinkModal();
   };
 
-  const handleDeleteLink = (categoryId: string, linkIndex: number) => {
+  const handleDeleteLink = async (categoryId: string, link: Link) => {
+    if (!link.id) return;
+
     if (confirm('Are you sure you want to delete this link?')) {
+      const { error: deleteError } = await supabase
+        .from('links')
+        .delete()
+        .eq('id', link.id);
+
+      if (deleteError) {
+        console.error('Error deleting link:', deleteError);
+        alert('Failed to delete link. Please try again.');
+        return;
+      }
+
+      // Optimistic update
       setCategories(prev =>
         prev.map(category =>
           category.id === categoryId
-            ? { ...category, links: category.links.filter((_, index) => index !== linkIndex) }
+            ? { ...category, links: category.links.filter(l => l.id !== link.id) }
             : category
         )
       );
     }
   };
 
-  const openEditLinkModal = (categoryId: string, linkIndex: number) => {
-    const category = categories.find(cat => cat.id === categoryId);
-    if (category && category.links[linkIndex]) {
-      setSelectedCategory(categoryId);
-      setEditingLinkIndex(linkIndex);
-      setEditLink({ ...category.links[linkIndex] });
-      setShowEditLinkModal(true);
-    }
+  const openEditLinkModal = (categoryId: string, link: Link) => {
+    setSelectedCategory(categoryId);
+    setEditingLink(link);
+    setEditLink({ ...link });
+    setShowEditLinkModal(true);
   };
 
   const closeEditLinkModal = () => {
     setShowEditLinkModal(false);
     setSelectedCategory('');
-    setEditingLinkIndex(-1);
+    setEditingLink(null);
     setEditLink({
       name: '',
       url: '',
@@ -342,27 +203,31 @@ export default function Home() {
     });
   };
 
-  const handleUpdateLink = (e: React.FormEvent) => {
+  const handleUpdateLink = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!editLink.name || !editLink.url) {
+
+    if (!editLink.name || !editLink.url || !editingLink?.id) {
       alert('Please fill in at least the name and URL');
       return;
     }
 
-    setCategories(prev =>
-      prev.map(category =>
-        category.id === selectedCategory
-          ? {
-              ...category,
-              links: category.links.map((link, index) =>
-                index === editingLinkIndex ? editLink : link
-              )
-            }
-          : category
-      )
-    );
+    const { error: updateError } = await supabase
+      .from('links')
+      .update({
+        name: editLink.name,
+        url: editLink.url,
+        description: editLink.description,
+        color: editLink.color,
+      })
+      .eq('id', editingLink.id);
 
+    if (updateError) {
+      console.error('Error updating link:', updateError);
+      alert('Failed to update link. Please try again.');
+      return;
+    }
+
+    await fetchCategories();
     closeEditLinkModal();
   };
 
@@ -379,6 +244,43 @@ export default function Home() {
     { name: 'Indigo', value: 'bg-indigo-600' },
     { name: 'Slate', value: 'bg-slate-600' },
   ];
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[hsl(216,32%,15%)] flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-[hsl(168,100%,45%)] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-[hsl(168,30%,70%)] text-lg">Loading Wicky Links...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[hsl(216,32%,15%)] flex items-center justify-center px-4">
+        <div className="max-w-xl w-full bg-[hsl(216,28%,18%)] rounded-xl border-2 border-red-500/50 p-8 text-center">
+          <h1 className="text-2xl font-bold text-[hsl(168,100%,95%)] mb-4">Database Setup Required</h1>
+          <p className="text-[hsl(168,30%,70%)] mb-6">{error}</p>
+          <div className="bg-[hsl(216,32%,15%)] rounded-lg p-4 text-left mb-6">
+            <p className="text-sm text-[hsl(168,100%,95%)] font-semibold mb-2">To set up the database:</p>
+            <ol className="text-sm text-[hsl(168,30%,70%)] space-y-2 list-decimal list-inside">
+              <li>Go to the <a href="https://supabase.com/dashboard/project/ljsiggrlbklujknqglwm/sql" target="_blank" rel="noopener noreferrer" className="text-[hsl(168,100%,45%)] underline">Supabase SQL Editor</a></li>
+              <li>Visit <code className="bg-[hsl(216,24%,25%)] px-1 rounded">/api/setup</code> to get the migration SQL</li>
+              <li>Copy and run the SQL in the editor</li>
+              <li>Refresh this page</li>
+            </ol>
+          </div>
+          <button
+            onClick={() => { setLoading(true); setError(null); fetchCategories(); }}
+            className="px-6 py-3 bg-[hsl(168,100%,45%)] text-[hsl(216,32%,15%)] rounded-lg font-semibold hover:bg-[hsl(168,100%,55%)] transition-all duration-300"
+          >
+            Retry Connection
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[hsl(216,32%,15%)] py-10 px-4">
@@ -429,15 +331,15 @@ export default function Home() {
                   </div>
                   {category.links.length > 0 ? (
                     <div className="grid gap-4 md:grid-cols-2">
-                      {category.links.map((link, index) => (
+                      {category.links.map((link) => (
                         <div
-                          key={index}
+                          key={link.id}
                           className="relative group block p-4 bg-[hsl(216,28%,18%)] rounded-lg hover:bg-[hsl(216,28%,22%)] transition-all duration-300 ease-out transform hover:-translate-y-1 hover:shadow-[0_0_20px_hsl(168,100%,45%,0.2)] border border-[hsl(216,24%,25%)] hover:border-[hsl(168,100%,45%)]"
                         >
                           <button
                             onClick={(e) => {
                               e.preventDefault();
-                              openEditLinkModal(category.id, index);
+                              openEditLinkModal(category.id, link);
                             }}
                             className="absolute top-2 right-10 w-6 h-6 bg-blue-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-xs font-bold hover:bg-blue-700"
                             title="Edit link"
@@ -447,7 +349,7 @@ export default function Home() {
                           <button
                             onClick={(e) => {
                               e.preventDefault();
-                              handleDeleteLink(category.id, index);
+                              handleDeleteLink(category.id, link);
                             }}
                             className="absolute top-2 right-2 w-6 h-6 bg-red-600 text-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center text-xs font-bold hover:bg-red-700"
                             title="Delete link"
@@ -694,7 +596,7 @@ export default function Home() {
         )}
 
         <footer className="mt-16 text-center text-[hsl(168,30%,70%)] text-sm">
-          <p>© {new Date().getFullYear()} Wicky Links. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} Wicky Links. All rights reserved.</p>
         </footer>
       </div>
     </div>
