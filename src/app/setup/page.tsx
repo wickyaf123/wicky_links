@@ -138,7 +138,7 @@ export default function SetupPage() {
               Click the button below to open the SQL Editor in your Supabase Dashboard:
             </p>
             <a
-              href="https://supabase.com/dashboard/project/cxnhpvcpibxftlskujwx/sql/new"
+              href="https://supabase.com/dashboard/project/ljsiggrlbklujknqglwm/sql/new"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block px-6 py-3 bg-[hsl(168,100%,45%)] text-[hsl(216,32%,15%)] rounded-lg font-semibold hover:bg-[hsl(168,100%,55%)] transition-all duration-300 shadow-[0_0_15px_hsl(168,100%,45%,0.4)]"

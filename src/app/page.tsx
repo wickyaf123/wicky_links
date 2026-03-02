@@ -265,7 +265,7 @@ export default function Home() {
           <div className="bg-[hsl(216,32%,15%)] rounded-lg p-4 text-left mb-6">
             <p className="text-sm text-[hsl(168,100%,95%)] font-semibold mb-2">To set up the database:</p>
             <ol className="text-sm text-[hsl(168,30%,70%)] space-y-2 list-decimal list-inside">
-              <li>Go to the <a href="https://supabase.com/dashboard/project/cxnhpvcpibxftlskujwx/sql" target="_blank" rel="noopener noreferrer" className="text-[hsl(168,100%,45%)] underline">Supabase SQL Editor</a></li>
+              <li>Go to the <a href="https://supabase.com/dashboard/project/ljsiggrlbklujknqglwm/sql" target="_blank" rel="noopener noreferrer" className="text-[hsl(168,100%,45%)] underline">Supabase SQL Editor</a></li>
               <li>Visit <code className="bg-[hsl(216,24%,25%)] px-1 rounded">/api/setup</code> to get the migration SQL</li>
               <li>Copy and run the SQL in the editor</li>
               <li>Refresh this page</li>
