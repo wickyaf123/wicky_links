@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import { supabase } from '@/lib/supabase';
+import { getSupabaseClient, isSupabaseConfigured } from '@/lib/supabase';
 
 interface Link {
   id?: string;
@@ -19,6 +19,9 @@ interface Category {
   sort_order?: number;
   links: Link[];
 }
+
+const SUPABASE_CONFIG_ERROR =
+  'Supabase is not configured. Set NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY.';
 
 export default function Home() {
   const [openCategories, setOpenCategories] = useState<string[]>(['main-links']);
@@ -43,6 +46,19 @@ export default function Home() {
   const [error, setError] = useState<string | null>(null);
 
   const fetchCategories = useCallback(async () => {
+    if (!isSupabaseConfigured) {
+      setError(SUPABASE_CONFIG_ERROR);
+      setLoading(false);
+      return;
+    }
+
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      setError(SUPABASE_CONFIG_ERROR);
+      setLoading(false);
+      return;
+    }
+
     try {
       setError(null);
 
@@ -131,6 +147,12 @@ export default function Home() {
       return;
     }
 
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      alert(SUPABASE_CONFIG_ERROR);
+      return;
+    }
+
     // Get the current max sort_order for this category
     const category = categories.find(cat => cat.id === selectedCategory);
     const maxSortOrder = category
@@ -160,6 +182,12 @@ export default function Home() {
 
   const handleDeleteLink = async (categoryId: string, link: Link) => {
     if (!link.id) return;
+
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      alert(SUPABASE_CONFIG_ERROR);
+      return;
+    }
 
     if (confirm('Are you sure you want to delete this link?')) {
       const { error: deleteError } = await supabase
@@ -208,6 +236,12 @@ export default function Home() {
 
     if (!editLink.name || !editLink.url || !editingLink?.id) {
       alert('Please fill in at least the name and URL');
+      return;
+    }
+
+    const supabase = getSupabaseClient();
+    if (!supabase) {
+      alert(SUPABASE_CONFIG_ERROR);
       return;
     }
 
